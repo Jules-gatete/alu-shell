@@ -36,6 +36,10 @@ stop_process() {
 }
 
 restart_process() {
+    if [ -f "$PID_FILE" ]; then
+        stop_process
+    fi
+    start_process
     echo "$PROCESS_NAME restarted"
     exit 0 
 }
