@@ -1,4 +1,3 @@
-Copy code
 #!/usr/bin/env bash
 # Script for managing the manage_my_process
 # Requirements:
@@ -9,7 +8,7 @@ Copy code
 # - Script creates /var/run/my_process.pid file when started
 # - Script starts manage_my_process process when started
 # - Script deletes /var/run/my_process.pid file when stopped
-# - Script stops manage_my_process process when stopped
+
 
 PID_FILE="/var/run/my_process.pid"
 PROCESS_NAME="manage_my_process"
@@ -20,9 +19,8 @@ start_process() {
     else
         ./manage_my_process >/dev/null 2>&1 &
         echo -n $! > "$PID_FILE"
-        echo -n "$PROCESS_NAME started"
+        echo "$PROCESS_NAME started"
     fi
-    echo "."
 }
 
 stop_process() {
@@ -30,7 +28,7 @@ stop_process() {
         pid=$(cat "$PID_FILE")
         kill "$pid"
         rm "$PID_FILE"
-        echo "Good"
+        echo "$PROCESS_NAME stopped"
     else
         echo "$PROCESS_NAME is not running."
     fi
@@ -39,7 +37,7 @@ stop_process() {
 restart_process() {
     stop_process
     start_process
-    echo "$PROCESS_NAME restarted."
+    echo "$PROCESS_NAME restarted"
 }
 
 case "$1" in
@@ -59,4 +57,3 @@ case "$1" in
 esac
 
 exit 0
-
