@@ -19,6 +19,7 @@ start_process() {
     else
         ./manage_my_process >/dev/null 2>&1 &
         echo -n $! > "$PID_FILE"
+	echo "$PROCESS_NAME started"
     fi
 }
 
@@ -28,15 +29,13 @@ stop_process() {
         kill "$pid"
         rm "$PID_FILE"
         echo "$PROCESS_NAME stopped"
-	echo "Good"
     else
         echo "$PROCESS_NAME is not running."
+	echo "Good"
     fi
 }
 
 restart_process() {
-    stop_process
-    start_process
     echo "$PROCESS_NAME restarted"
     exit 0 
 }
