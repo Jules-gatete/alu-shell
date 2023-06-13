@@ -51,7 +51,7 @@ case "$1" in
         restart_process
         ;;
     *)
-        echo "Usage: manage_my_process {start|stop|restart}"
+        echo "Usage: manage_my_process {restarted}"
         exit 1
         ;;
 esac
