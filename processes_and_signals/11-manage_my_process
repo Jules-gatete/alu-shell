@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Script for managing the manage_my_process
+# Requirements:
+# - Script displays manage_my_process started when started
+# - Script displays manage_my_process stopped when stopped
+# - Script displays manage_my_process restarted when restarted
+# - Script displays Usage: manage_my_process {start|stop|restart} when nothing is passed or something different than start, stop, or restart
+# - Script creates /var/run/my_process.pid file when started
+# - Script starts manage_my_process process when started
+# - Script deletes /var/run/my_process.pid file when stopped
+# - Script stops manage_my_process process when stopped
+
+function start_manage_my_process() {
+    echo $$ > /var/run/my_process.pid
+    echo "manage_my_process started"
+    # Add code to start the manage_my_process process here
+}
+
+function stop_manage_my_process() {
+    rm /var/run/my_process.pid
+    echo "manage_my_process stopped"
+    # Add code to stop the manage_my_process process here
+}
+
+function restart_manage_my_process() {
+    stop_manage_my_process
+    start_manage_my_process
+    echo "manage_my_process restarted"
+}
+
+case $1 in
+    start)
+        start_manage_my_process
+        ;;
+    stop)
+        stop_manage_my_process
+        ;;
+    restart)
+        restart_manage_my_process
+        ;;
+    *)
+        echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
