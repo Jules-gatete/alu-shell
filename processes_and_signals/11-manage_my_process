@@ -9,53 +9,53 @@
 # - Script starts manage_my_process process when started
 # - Script deletes /var/run/my_process.pid file when stopped
 # - Script stops manage_my_process process when stopped
+# - Script restarts manage_my_process process
 
-function start_manage_my_process() {
-    if [ -e "/var/run/my_process.pid" ]; then
-        echo "manage_my_process already started"
+PID_FILE="/var/run/my_process.pid"
+PROCESS_NAME="manage_my_process"
+
+start_process() {
+    if [ -f "$PID_FILE" ]; then
+        echo "$PROCESS_NAME is already running."
     else
-        echo $$ > /var/run/my_process.pid
-        echo "manage_my_process started"
-        # Add code to start the manage_my_process process here
+        ./manage_my_process &
+        echo $! > "$PID_FILE"
+        echo "$PROCESS_NAME started."
     fi
 }
 
-function stop_manage_my_process() {
-    if [ -e "/var/run/my_process.pid" ]; then
-        rm /var/run/my_process.pid
-        echo "manage_my_process stopped"
-        # Add code to stop the manage_my_process process here
+stop_process() {
+    if [ -f "$PID_FILE" ]; then
+        pid=$(cat "$PID_FILE")
+        kill "$pid"
+        rm "$PID_FILE"
+        echo "$PROCESS_NAME stopped."
     else
-        echo "manage_my_process not running"
+        echo "$PROCESS_NAME is not running."
     fi
 }
 
-function restart_manage_my_process() {
-    stop_manage_my_process
-    start_manage_my_process
-    echo "manage_my_process restarted"
+restart_process() {
+    stop_process
+    start_process
+    echo "$PROCESS_NAME restarted."
 }
 
-case $1 in
+case "$1" in
     start)
-        start_manage_my_process
+        start_process
         ;;
     stop)
-        stop_manage_my_process
+        stop_process
         ;;
     restart)
-        restart_manage_my_process
+        restart_process
         ;;
     *)
-        echo "Usage: manage_my_process {start|stop|restart}"
+        echo "Usage: $0 {start|stop|restart}"
         exit 1
         ;;
 esac
 
-# Additional requirements:
-# Script starts manage_my_process process when started
-# Script deletes /var/run/my_process.pid file when stopped
-# Script stops manage_my_process process when stopped
-
-# Add your additional code here to start, stop, and manage the manage_my_process process
+exit 0
 
