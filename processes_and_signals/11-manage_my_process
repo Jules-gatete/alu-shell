@@ -11,15 +11,23 @@
 # - Script stops manage_my_process process when stopped
 
 function start_manage_my_process() {
-    echo $$ > /var/run/my_process.pid
-    echo "manage_my_process started"
-    # Add code to start the manage_my_process process here
+    if [ -e "/var/run/my_process.pid" ]; then
+        echo "manage_my_process already started"
+    else
+        echo $$ > /var/run/my_process.pid
+        echo "manage_my_process started"
+        # Add code to start the manage_my_process process here
+    fi
 }
 
 function stop_manage_my_process() {
-    rm /var/run/my_process.pid
-    echo "manage_my_process stopped"
-    # Add code to stop the manage_my_process process here
+    if [ -e "/var/run/my_process.pid" ]; then
+        rm /var/run/my_process.pid
+        echo "manage_my_process stopped"
+        # Add code to stop the manage_my_process process here
+    else
+        echo "manage_my_process not running"
+    fi
 }
 
 function restart_manage_my_process() {
@@ -43,4 +51,11 @@ case $1 in
         exit 1
         ;;
 esac
+
+# Additional requirements:
+# Script starts manage_my_process process when started
+# Script deletes /var/run/my_process.pid file when stopped
+# Script stops manage_my_process process when stopped
+
+# Add your additional code here to start, stop, and manage the manage_my_process process
 
