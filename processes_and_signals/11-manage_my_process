@@ -54,8 +54,7 @@ case "$1" in
         ;;
     *)
         echo "Usage: manage_my_process {start|stop|restart}"
-	echo "Script delete $PID_FILE file when stopped" 
-        echo "The script starts $PROCESS_NAME process when started"
+
         exit 1
         ;;
 esac
