@@ -10,7 +10,6 @@
 # - Script deletes /var/run/my_process.pid file when stopped
 # - Script stops manage_my_process process when stopped
 
-
 PID_FILE="/var/run/my_process.pid"
 PROCESS_NAME="manage_my_process"
 
@@ -18,35 +17,26 @@ start_process() {
     if [ -f "$PID_FILE" ]; then
         echo "$PROCESS_NAME is already running."
     else
-        ps_output=$(ps -ef | grep "$PROCESS_NAME" | grep -v grep)
-        if [ -n "$ps_output" ]; then
-            echo "$PROCESS_NAME is already running."
-        else
-            ./manage_my_process >/dev/null 2>&1 &
-            echo -n "$!" > "$PID_FILE"
-            echo "$PROCESS_NAME started"
-        fi
+        ./manage_my_process >/dev/null 2>&1 &
+        echo -n $! > "$PID_FILE"
+        echo "$PROCESS_NAME started"
     fi
 }
 
 stop_process() {
     if [ -f "$PID_FILE" ]; then
-        ps_output=$(ps -ef | grep "$PROCESS_NAME" | grep -v grep)
-        if [ -n "$ps_output" ]; then
-            pid=$(cat "$PID_FILE")
-            kill "$pid"
-            rm "$PID_FILE"
-            echo "$PROCESS_NAME stopped"
-            echo "Good"
-        else
-            echo "$PROCESS_NAME is not running."
-        fi
+        pid=$(cat "$PID_FILE")
+        kill "$pid"
+        rm "$PID_FILE"
+        echo "$PROCESS_NAME stopped"
     else
         echo "$PROCESS_NAME is not running."
     fi
 }
 
 restart_process() {
+    stop_process
+    start_process
     echo "$PROCESS_NAME restarted"
 }
 
@@ -61,10 +51,9 @@ case "$1" in
         restart_process
         ;;
     *)
-        echo "Usage: $0 {start|stop|restart}"
+        echo "Usage: manage_my_process {start|stop|restart}"
         exit 1
         ;;
 esac
 
 exit 0
-
