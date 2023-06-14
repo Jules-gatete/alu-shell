@@ -10,6 +10,7 @@
 # - Script deletes /var/run/my_process.pid file when stopped
 # - Script stops manage_my_process process when stopped
 
+
 PID_FILE="/var/run/my_process.pid"
 PROCESS_NAME="manage_my_process"
 
@@ -22,7 +23,7 @@ start_process() {
             echo "$PROCESS_NAME is already running."
         else
             ./manage_my_process >/dev/null 2>&1 &
-            echo -n $! > "$PID_FILE"
+            echo -n "$!" > "$PID_FILE"
             echo "$PROCESS_NAME started"
         fi
     fi
@@ -60,7 +61,7 @@ case "$1" in
         restart_process
         ;;
     *)
-        echo "Usage: manage_my_process {start|stop|restart}"
+        echo "Usage: $0 {start|stop|restart}"
         exit 1
         ;;
 esac
