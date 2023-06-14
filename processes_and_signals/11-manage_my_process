@@ -37,9 +37,7 @@ stop_process() {
 
 restart_process() {
     if [ -f "$PID_FILE" ]; then
-        stop_process
     fi
-    start_process
     echo "$PROCESS_NAME restarted"
     exit 0 
 }
@@ -56,6 +54,8 @@ case "$1" in
         ;;
     *)
         echo "Usage: manage_my_process {start|stop|restart}"
+	echo "Script delete $PID_FILE file when stopped" 
+        echo "The script starts $PROCESS_NAME process when started"
         exit 1
         ;;
 esac
