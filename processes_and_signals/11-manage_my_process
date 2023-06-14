@@ -43,13 +43,11 @@ stop_process() {
 # Function to restart the process
 restart_process() {
     if [ -f "$PID_FILE" ]; then
-       
-    fi
-   
     echo "$PROCESS_NAME restarted"  # Display "manage_my_process restarted"
     echo "The script starts manage_my_process process when restarted"  # Display "The script starts manage_my_process process when restarted"
     exit 0
 }
+
 
 case "$1" in
     start)
