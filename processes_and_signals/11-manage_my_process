@@ -10,6 +10,8 @@
 # - Script deletes /var/run/my_process.pid file when stopped
 # - Script stops manage_my_process process when stopped
 
+PID_FILE="/var/run/my_process.pid"
+PROCESS_NAME="manage_my_process"
 
 start_process() {
     if [ -f "$PID_FILE" ]; then
