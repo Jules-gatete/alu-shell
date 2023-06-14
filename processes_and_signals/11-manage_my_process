@@ -17,7 +17,7 @@ start_process(){
     if [ -f "$PID_FILE" ]; then
         echo "$PROCESS_NAME is already running."
     else
-        ./manage_my_process "$PROCESS_NAME" "$ANSWER_FILE_NAME" >/dev/null 2>&1 &
+        ./manage_my_process  >/dev/null 2>&1 &
         echo -n $! > "$PID_FILE"
         echo "$PROCESS_NAME started"
     fi
@@ -29,7 +29,6 @@ stop_process() {
         kill "$pid"
         rm "$PID_FILE"
         echo "$PROCESS_NAME stopped"
-        echo "Good"
     else
         echo "$PROCESS_NAME is not running."
     fi
