@@ -18,6 +18,7 @@ elif [[ "$1" == "restart" ]]; then
  if test -f "/var/run/my_process.pid"; then
  kill "$(cat /var/run/my_process.pid)"
  rm /var/run/my_process.pid
+ echo "Good"
  fi
  # start program
  ./manage_my_process &
