@@ -1,57 +1,29 @@
 #!/usr/bin/env bash
-# Script for managing the manage_my_process
-# Requirements:
-# - Script displays manage_my_process started when started
-# - Script displays manage_my_process stopped when stopped
-# - Script displays manage_my_process restarted when restarted
-# - Script displays Usage: manage_my_process {start|stop|restart} when nothing is passed or something different than start, stop, or restart
-# - Script creates /var/run/my_process.pid file when started
-# - Script starts manage_my_process process when started
-# - Script deletes /var/run/my_process.pid file when stopped
-# - Script stops manage_my_process process when stopped
+#manage
+if [[ "$" == "1" ]]; then 
+ if [[ "$1" == "start" ]]; then
+ ./manage_my_process &
 
-PID_FILE="/var/run/my_process.pid"
-PROCESS_NAME="manage_my_process"
+ echo "$1" > /var/run/my_process.pid 
+ echo "manage_my_process started"
 
-start_process() {
-    if [ -f "$PID_FILE" ]; then
-        echo "$PROCESS_NAME is already running."
-    else
-        ./manage_my_process >/dev/null 2>&1 &
-        echo -n $! > "$PID_FILE"
-        echo "$PROCESS_NAME started"
-    fi
-}
+ elif [[ "$1" == "stop" ]]; then 
+  if test -f "/var/run/my_process.pid"; then 
+ kill "$(cat /var/run/my_process.pid)"
+ fi
+ rm /var/run/my_process.pid 
+ echo "manage_my_process stopped"
+ elif [[ "$1" == "restart" ]]; then
+#stop program
 
-stop_process() {
-    if [ -f "$PID_FILE" ]; then
-        pid=$(cat "$PID_FILE")
-        kill "$pid"
-        rm "$PID_FILE"
-        echo "$PROCESS_NAME stopped"
-    else
-        echo "$PROCESS_NAME is not running."
-    fi
-}
-
-restart_process() {
-    echo "$PROCESS_NAME restarted"
-}
-
-case "$1" in
-    start)
-        start_process
-        ;;
-    stop)
-        stop_process
-        ;;
-    restart)
-        restart_process
-        ;;
-    *)
-        echo "Usage: manage_my_process {start|stop|restart}"
-        exit 1
-        ;;
-esac
-
-exit 0
+if test -f "/var/run/my_process.pid"; then
+ kill "$(cat /var/run/my_process.pid)"
+fi
+# start program
+./manage_my_process &
+echo "$1"> /var/run/my_process.pid
+ echo "manage_my_process restarted" else
+echo "Usage: manage_my_process (start/stop | restart}"
+fi else
+echo "Usage: manage_my_process (start/stop/restart}"
+fi
