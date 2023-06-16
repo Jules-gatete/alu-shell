@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #manage
-if [[ "$" == "1" ]]; then 
+if [[ "$#" == "1" ]]; then 
  if [[ "$1" == "start" ]]; then
  ./manage_my_process &
  echo "$1" > /var/run/my_process.pid 
