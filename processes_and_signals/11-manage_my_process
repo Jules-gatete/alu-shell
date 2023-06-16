@@ -4,12 +4,12 @@ if [[ "$#" == "1" ]]; then
  if [[ "$1" == "start" ]]; then
  ./manage_my_process &
  echo "$1" > /var/run/my_process.pid
- echo "manage_my_process started"
+  echo "manage_my_process started"
 elif [[ "$1" == "stop" ]]; then
  if test -f "/var/run/my_process.pid"; then
  kill "$(cat /var/run/my_process.pid)"
  rm /var/run/my_process.pid
- echo "manage_my_process stopped"
+ echo "Good"
  else
  echo "manage_my_process is not running"
  fi
@@ -18,7 +18,7 @@ elif [[ "$1" == "restart" ]]; then
  if test -f "/var/run/my_process.pid"; then
  kill "$(cat /var/run/my_process.pid)"
  rm /var/run/my_process.pid
- echo "Good"
+  echo "bash"
  fi
  # start program
  ./manage_my_process &
