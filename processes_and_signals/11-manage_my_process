@@ -27,4 +27,3 @@ else
 else
   echo "Usage: manage_your_process {start|stop|restart}"
 fi
-
