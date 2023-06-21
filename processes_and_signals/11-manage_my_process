@@ -9,8 +9,8 @@ if [[ "$#" == "1" ]]; then
   if [[ -f "/var/run/my_process.pid" ]]; then
     process_id=$(cat /var/run/my_process.pid)
     kill "$process_id"
-    echo "managa_my_process stopped"
-if
+    echo "manage_my_process stopped"
+elif
     rm /var/run/my_process.pid; then
     echo "Good"
   fi
