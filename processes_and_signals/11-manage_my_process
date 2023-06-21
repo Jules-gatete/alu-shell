@@ -5,16 +5,19 @@ if [[ "$#" == "1" ]]; then
             ./manage_my_process &
             echo "$1" > /var/run/my_process.pid
             echo "manage_my_process started"
-          elif [[ "$1" == "stop" ]]; then
-            if [[ -f "/var/run/my_process.pid" ]]; then
-              kill "$(cat /var/run/my_process.pid)"
-            fi
-            rm /var/run/my_process.pid
+       elif [[ "$1" == "stop" ]]; then
+  if [[ -f "/var/run/my_process.pid" ]]; then
+    process_id=$(cat /var/run/my_process.pid)
+    kill "$process_id"
+    rm /var/run/my_process.pid
+    echo "manage_my_process stopped"
+  else
+    echo "Good"
+  fi
             echo "manage_my_process stopped"
           elif [[ "$1" == "restart" ]]; then
             if [[ -f "/var/run/my_process.pid" ]]; then
               kill "$(cat /var/run/my_process.pid)"
-              echo "bash"
             fi
             ./manage_my_process &
             echo "$1" > /var/run/my_process.pid
